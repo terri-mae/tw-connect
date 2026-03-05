@@ -1,13 +1,34 @@
-const app  = require('./app');
+// server/src/app.js
+const express = require('express');
+const cors = require('cors');
 const path = require('path');
 
-// Ensure DB is migrated on startup
-require('./db/migrate');
+const app = express();
 
-const PORT = process.env.PORT || 3001;
+// ----------------------
+// CORS Configuration
+// ----------------------
+app.use(cors({
+  origin: 'https://tw-connect-frontend.onrender.com', // replace with your actual frontend URL
+  credentials: true
+}));
 
-app.listen(PORT, () => {
-  console.log(`\n✅  TW Connect API running on port ${PORT}`);
-  console.log(`   Environment : ${process.env.NODE_ENV || 'development'}`);
-  console.log(`   Database    : ${path.resolve(__dirname, '..', '..', 'database', 'twconnect.db')}\n`);
+// ----------------------
+// Middleware
+// ----------------------
+app.use(express.json()); // for parsing JSON request bodies
+app.use(express.urlencoded({ extended: true })); // for parsing URL-encoded bodies
+
+// ----------------------
+// Routes
+// ----------------------
+// Example route to test server
+app.get('/test', (req, res) => {
+  res.json({ message: 'TW Connect API is running!' });
 });
+
+// You can import and use your other route files here
+// const userRoutes = require('./routes/users');
+// app.use('/users', userRoutes);
+
+module.exports = app;
