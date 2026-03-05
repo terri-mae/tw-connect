@@ -52,6 +52,14 @@ app.use('/api/dashboard',    dashboardRouter);
 // ── Health check ─────────────────────────────────────────────────────────────
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
+// Health check / root message
+app.get('/', (req, res) => {
+  res.send('✅ TW Connect API is running on Render!');
+});
+
+// Optional: keep /api/health for automated checks
+app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+
 // ── Serve React build in production ─────────────────────────────────────────
 if (process.env.NODE_ENV === 'production') {
   const clientDist = path.join(__dirname, '..', '..', 'client', 'dist');
