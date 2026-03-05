@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>03 — Contact List · TW Connect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter','system-ui','sans-serif'] } } } }</script>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #09090b; color: #f4f4f5; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 3px; }
+    select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px !important; }
+  </style>
+</head>
+<body class="dark">
+<div style="display:flex;height:100vh;overflow:hidden;">
+
+  <!-- SIDEBAR -->
+  <aside style="width:220px;background:#18181b;border-right:1px solid #27272a;display:flex;flex-direction:column;flex-shrink:0;">
+    <div style="padding:1.25rem 1rem;border-bottom:1px solid #27272a;display:flex;align-items:center;gap:0.625rem;">
+      <div style="width:30px;height:30px;background:#4f46e5;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(99,102,241,0.3);">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <span style="font-size:0.875rem;font-weight:700;color:#f4f4f5;">TW Connect</span>
+    </div>
+    <nav style="flex:1;padding:0.75rem 0.5rem;overflow-y:auto;">
+      <div style="font-size:0.65rem;font-weight:600;color:#52525b;text-transform:uppercase;letter-spacing:0.08em;padding:0 0.75rem;margin-bottom:0.375rem;">Main</div>
+      <a href="#" style="display:flex;align-items:center;gap:0.625rem;padding:0.5rem 0.75rem;border-radius:8px;color:#71717a;font-size:0.8125rem;font-weight:500;text-decoration:none;margin-bottom:1px;" onmouseover="this.style.background='rgba(39,39,42,0.7)';this.style.color='#e4e4e7'" onmouseout="this.style.background='';this.style.color='#71717a'">
+        <i data-lucide="layout-dashboard" style="width:15px;height:15px;flex-shrink:0;"></i> Dashboard
+      </a>
+      <a href="#" style="display:flex;align-items:center;gap:0.625rem;padding:0.5rem 0.75rem;border-radius:8px;background:rgba(99,102,241,0.12);color:#818cf8;font-size:0.8125rem;font-weight:500;text-decoration:none;margin-bottom:1px;">
+        <i data-lucide="users" style="width:15px;height:15px;flex-shrink:0;"></i> Contacts
+      </a>
+      <a href="#" style="display:flex;align-items:center;gap:0.625rem;padding:0.5rem 0.75rem;border-radius:8px;color:#71717a;font-size:0.8125rem;font-weight:500;text-decoration:none;margin-bottom:1px;" onmouseover="this.style.background='rgba(39,39,42,0.7)';this.style.color='#e4e4e7'" onmouseout="this.style.background='';this.style.color='#71717a'">
+        <i data-lucide="building-2" style="width:15px;height:15px;flex-shrink:0;"></i> Companies
+      </a>
+      <a href="#" style="display:flex;align-items:center;gap:0.625rem;padding:0.5rem 0.75rem;border-radius:8px;color:#71717a;font-size:0.8125rem;font-weight:500;text-decoration:none;margin-bottom:1px;" onmouseover="this.style.background='rgba(39,39,42,0.7)';this.style.color='#e4e4e7'" onmouseout="this.style.background='';this.style.color='#71717a'">
+        <i data-lucide="file-check" style="width:15px;height:15px;flex-shrink:0;"></i> Credentials Deck
+      </a>
+      <div style="height:1px;background:#27272a;margin:0.625rem 0.5rem;"></div>
+      <a href="#" style="display:flex;align-items:center;gap:0.625rem;padding:0.5rem 0.75rem;border-radius:8px;color:#71717a;font-size:0.8125rem;font-weight:500;text-decoration:none;" onmouseover="this.style.background='rgba(39,39,42,0.7)';this.style.color='#e4e4e7'" onmouseout="this.style.background='';this.style.color='#71717a'">
+        <i data-lucide="settings" style="width:15px;height:15px;flex-shrink:0;"></i> Settings
+      </a>
+    </nav>
+    <div style="padding:0.875rem 0.75rem;border-top:1px solid #27272a;display:flex;align-items:center;gap:0.625rem;">
+      <div style="width:28px;height:28px;border-radius:50%;background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span style="font-size:0.625rem;font-weight:700;color:#818cf8;">JM</span>
+      </div>
+      <div style="flex:1;min-width:0;">
+        <p style="font-size:0.75rem;font-weight:600;color:#f4f4f5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2;">James Mentz</p>
+        <p style="font-size:0.65rem;color:#71717a;line-height:1.2;">Admin</p>
+      </div>
+      <button style="background:none;border:none;cursor:pointer;color:#52525b;padding:2px;" onmouseover="this.style.color='#a1a1aa'" onmouseout="this.style.color='#52525b'">
+        <i data-lucide="log-out" style="width:13px;height:13px;"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+    <!-- Header -->
+    <header style="background:rgba(9,9,11,0.95);border-bottom:1px solid #27272a;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <div>
+        <h1 style="font-size:0.9375rem;font-weight:600;color:#f4f4f5;">Contacts</h1>
+        <p style="font-size:0.7rem;color:#71717a;">284 total contacts</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <div style="position:relative;">
+          <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#52525b;">
+            <i data-lucide="search" style="width:13px;height:13px;"></i>
+          </span>
+          <input type="text" placeholder="Search by name, company, email…"
+                 style="background:#27272a;border:1px solid #3f3f46;border-radius:8px;padding:0.4375rem 1rem 0.4375rem 2rem;font-size:0.8125rem;color:#a1a1aa;width:260px;outline:none;font-family:Inter,system-ui,sans-serif;">
+        </div>
+        <button style="background:#3f3f46;color:#e4e4e7;border:none;border-radius:8px;padding:0.4375rem 0.875rem;font-size:0.8125rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:Inter,system-ui,sans-serif;">
+          <i data-lucide="upload" style="width:13px;height:13px;"></i> Import CSV
+        </button>
+        <button style="background:#4f46e5;color:white;border:none;border-radius:8px;padding:0.4375rem 0.875rem;font-size:0.8125rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:Inter,system-ui,sans-serif;">
+          <i data-lucide="plus" style="width:13px;height:13px;"></i> Add Contact
+        </button>
+      </div>
+    </header>
+
+    <!-- Filter bar -->
+    <div style="padding:0.75rem 1.5rem;border-bottom:1px solid #27272a;display:flex;align-items:center;gap:0.75rem;flex-shrink:0;background:#09090b;">
+      <span style="font-size:0.75rem;color:#71717a;font-weight:500;flex-shrink:0;">Filter:</span>
+      <!-- Owner filter -->
+      <select style="background:#27272a;border:1px solid #3f3f46;border-radius:7px;padding:0.375rem 0.75rem;font-size:0.8rem;color:#d4d4d8;outline:none;font-family:Inter,system-ui,sans-serif;cursor:pointer;">
+        <option>All owners</option>
+        <option>James Mentz</option><option>Laura Chen</option><option>Mark Davis</option>
+        <option>Sarah O'Brien</option><option>Dan Walsh</option>
+      </select>
+      <!-- Status filter -->
+      <select style="background:#27272a;border:1px solid #3f3f46;border-radius:7px;padding:0.375rem 0.75rem;font-size:0.8rem;color:#d4d4d8;outline:none;font-family:Inter,system-ui,sans-serif;cursor:pointer;">
+        <option>All statuses</option>
+        <option>Active</option><option>Cold</option><option>Do Not Contact</option>
+      </select>
+      <!-- Deck sent filter -->
+      <select style="background:#27272a;border:1px solid #3f3f46;border-radius:7px;padding:0.375rem 0.75rem;font-size:0.8rem;color:#d4d4d8;outline:none;font-family:Inter,system-ui,sans-serif;cursor:pointer;">
+        <option>Deck: all</option>
+        <option>Deck sent</option><option>Not sent</option>
+      </select>
+      <!-- Tag filter -->
+      <div style="position:relative;">
+        <span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:#52525b;">
+          <i data-lucide="tag" style="width:12px;height:12px;"></i>
+        </span>
+        <input type="text" placeholder="Filter by tag…"
+               style="background:#27272a;border:1px solid #3f3f46;border-radius:7px;padding:0.375rem 0.75rem 0.375rem 1.75rem;font-size:0.8rem;color:#d4d4d8;outline:none;width:150px;font-family:Inter,system-ui,sans-serif;">
+      </div>
+      <!-- Sort -->
+      <div style="margin-left:auto;display:flex;align-items:center;gap:0.5rem;">
+        <span style="font-size:0.75rem;color:#71717a;">Sort:</span>
+        <select style="background:#27272a;border:1px solid #3f3f46;border-radius:7px;padding:0.375rem 0.75rem;font-size:0.8rem;color:#d4d4d8;outline:none;font-family:Inter,system-ui,sans-serif;cursor:pointer;">
+          <option>Date added ↓</option>
+          <option>Last interaction ↓</option><option>Name A–Z</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Table area -->
+    <div style="flex:1;overflow-y:auto;">
+      <table style="width:100%;border-collapse:collapse;">
+        <thead style="position:sticky;top:0;background:#09090b;z-index:10;">
+          <tr style="border-bottom:1px solid #27272a;">
+            <th style="padding:0.75rem 1.5rem;text-align:left;font-size:0.65rem;font-weight:600;color:#71717a;text-transform:uppercase;letter-spacing:0.07em;white-space:nowrap;">
+              <input type="checkbox" style="accent-color:#6366f1;cursor:pointer;">
+            </th>
+            <th style="padding:0.75rem 1rem 0.75rem 0;text-align:left;font-size:0.65rem;font-weight:600;color:#71717a;text-transform:uppercase;letter-spacing:0.07em;white-space:nowrap;">Name / Company</th>
+            <th style="padding:0.75rem 1rem;text-align:left;font-size:0.65rem;font-weight:600;color:#71717a;text-transform:uppercase;letter-spacing:0.07em;">Owner</th>
+            <th style="padding:0.75rem 1rem;text-align:left;font-size:0.65rem;font-weight:600;color:#71717a;text-transform:uppercase;letter-spacing:0.07em;">Status</th>
+            <th style="padding:0.75rem 1rem;text-align:left;font-size:0.65rem;font-weight:600;color:#71717a;text-transform:uppercase;letter-spacing:0.07em;">Last Interaction</th>
+            <th style="padding:0.75rem 1rem;text-align:center;font-size:0.65rem;font-weight:600;color:#71717a;text-transform:uppercase;letter-spacing:0.07em;">Deck</th>
+            <th style="padding:0.75rem 1.5rem;text-align:right;font-size:0.65rem;font-weight:600;color:#71717a;text-transform:uppercase;letter-spacing:0.07em;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- Row 1: Sarah Mitchell - Active, deck sent -->
+          <tr style="border-bottom:1px solid #1f1f23;" onmouseover="this.style.background='rgba(39,39,42,0.3)'" onmouseout="this.style.background=''">
+            <td style="padding:1rem 1.5rem;"><input type="checkbox" style="accent-color:#6366f1;cursor:pointer;"></td>
+            <td style="padding:1rem 0;">
+              <div style="display:flex;align-items:center;gap:0.75rem;">
+                <div style="width:34px;height:34px;border-radius:50%;background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <span style="font-size:0.75rem;font-weight:700;color:#818cf8;">SM</span>
+                </div>
+                <div>
+                  <p style="font-size:0.875rem;font-weight:500;color:#f4f4f5;line-height:1.3;cursor:pointer;" onmouseover="this.style.color='#818cf8'" onmouseout="this.style.color='#f4f4f5'">Sarah Mitchell</p>
+                  <p style="font-size:0.75rem;color:#71717a;line-height:1.3;">Apex Manufacturing Ltd</p>
+                </div>
+              </div>
+            </td>
+            <td style="padding:1rem;">
+              <div style="display:flex;align-items:center;gap:6px;" title="James Mentz">
+                <div style="width:22px;height:22px;border-radius:50%;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);display:flex;align-items:center;justify-content:center;">
+                  <span style="font-size:0.5rem;font-weight:700;color:#818cf8;">JM</span>
+                </div>
+                <span style="font-size:0.8rem;color:#a1a1aa;">James M.</span>
+              </div>
+            </td>
+            <td style="padding:1rem;">
+              <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:0.7rem;font-weight:500;background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.2);">
+                <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;display:inline-block;"></span> Active
+              </span>
+            </td>
+            <td style="padding:1rem;font-size:0.8rem;color:#a1a1aa;">04/03/2026</td>
+            <td style="padding:1rem;text-align:center;">
+              <span title="Deck sent 15/01/2026" style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);">
+                <i data-lucide="check" style="width:11px;height:11px;color:#818cf8;"></i>
+              </span>
+            </td>
+            <td style="padding:1rem 1.5rem;text-align:right;">
+              <div style="display:flex;align-items:center;justify-content:flex-end;gap:0.375rem;">
+                <button title="Quick add interaction" style="background:none;border:none;cursor:pointer;padding:5px;border-radius:6px;color:#71717a;" onmouseover="this.style.background='#27272a';this.style.color='#a1a1aa'" onmouseout="this.style.background='none';this.style.color='#71717a'">
+                  <i data-lucide="plus-square" style="width:14px;height:14px;"></i>
+                </button>
+                <button title="Edit contact" style="background:none;border:none;cursor:pointer;padding:5px;border-radius:6px;color:#71717a;" onmouseover="this.style.background='#27272a';this.style.color='#a1a1aa'" onmouseout="this.style.background='none';this.style.color='#71717a'">
+                  <i data-lucide="pencil" style="width:14px;height:14px;"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Row 2: Tom Brennan - Active, no deck -->
+          <tr style="border-bottom:1px solid #1f1f23;" onmouseover="this.style.background='rgba(39,39,42,0.3)'" onmouseout="this.style.background=''">
+            <td style="padding:1rem 1.5rem;"><input type="checkbox" style="accent-color:#6366f1;cursor:pointer;"></td>
+            <td style="padding:1rem 0;">
+              <div style="display:flex;align-items:center;gap:0.75rem;">
+                <div style="width:34px;height:34px;border-radius:50%;background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <span style="font-size:0.75rem;font-weight:700;color:#6ee7b7;">TB</span>
+                </div>
+                <div>
+                  <p style="font-size:0.875rem;font-weight:500;color:#f4f4f5;line-height:1.3;cursor:pointer;" onmouseover="this.style.color='#818cf8'" onmouseout="this.style.color='#f4f4f5'">Tom Brennan</p>
+                  <p style="font-size:0.75rem;color:#71717a;line-height:1.3;">Meridian Group</p>
+                </div>
+              </div>
+            </td>
+            <td style="padding:1rem;">
+              <div style="display:flex;align-items:center;gap:6px;" title="Laura Chen">
+                <div style="width:22px;height:22px;border-radius:50%;background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25);display:flex;align-items:center;justify-content:center;">
+                  <span style="font-size:0.5rem;font-weight:700;color:#6ee7b7;">LC</span>
+                </div>
+                <span style="font-size:0.8rem;color:#a1a1aa;">Laura C.</span>
+              </div>
+            </td>
+            <td style="padding:1rem;">
+              <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:0.7rem;font-weight:500;background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.2);">
+                <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;display:inline-block;"></span> Active
+              </span>
+            </td>
+            <td style="padding:1rem;font-size:0.8rem;color:#a1a1aa;">04/03/2026</td>
+            <td style="padding:1rem;text-align:center;">
+              <span title="Deck not sent" style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#27272a;">
+                <i data-lucide="minus" style="width:11px;height:11px;color:#52525b;"></i>
+              </span>
+            </td>
+            <td style="padding:1rem 1.5rem;text-align:right;">
+              <div style="display:flex;align-items:center;justify-content:flex-end;gap:0.375rem;">
+                <button style="background:none;border:none;cursor:pointer;padding:5px;border-radius:6px;color:#71717a;" onmouseover="this.style.background='#27272a';this.style.color='#a1a1aa'" onmouseout="this.style.background='none';this.style.color='#71717a'"><i data-lucide="plus-square" style="width:14px;height:14px;"></i></button>
+                <button style="background:none;border:none;cursor:pointer;padding:5px;border-radius:6px;color:#71717a;" onmouseover="this.style.background='#27272a';this.style.color='#a1a1aa'" onmouseout="this.style.background='none';this.style.color='#71717a'"><i data-lucide="pencil" style="width:14px;height:14px;"></i></button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Row 3: Priya Patel - Cold, deck sent -->
+          <tr style="border-bottom:1px solid #1f1f23;" onmouseover="this.style.background='rgba(39,39,42,0.3)'" onmouseout="this.style.background=''">
+            <td style="padding:1rem 1.5rem;"><input type="checkbox" style="accent-color:#6366f1;cursor:pointer;"></td>
+            <td style="padding:1rem 0;">
+              <div style="display:flex;align-items:center;gap:0.75rem;">
+                <div style="width:34px;height:34px;border-radius:50%;background:rgba(251,191,36,0.12);border:1px solid rgba(251,191,36,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <span style="font-size:0.75rem;font-weight:700;color:#fbbf24;">PP</span>
+                </div>
+                <div>
+                  <p style="font-size:0.875rem;font-weight:500;color:#f4f4f5;line-height:1.3;cursor:pointer;" onmouseover="this.style.color='#818cf8'" onmouseout="this.style.color='#f4f4f5'">Priya Patel</p>
+                  <p style="font-size:0.75rem;color:#71717a;line-height:1.3;">Stratum Consulting</p>
+                </div>
+              </div>
+            </td>
+            <td style="padding:1rem;">
+              <div style="display:flex;align-items:center;gap:6px;" title="James Mentz">
+                <div style="width:22px;height:22px;border-radius:50%;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);display:flex;align-items:center;justify-content:center;">
+                  <span style="font-size:0.5rem;font-weight:700;color:#818cf8;">JM</span>
+                </div>
+                <span style="font-size:0.8rem;color:#a1a1aa;">James M.</span>
+              </div>
+            </td>
+            <td style="padding:1rem;">
+              <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:0.7rem;font-weight:500;background:rgba(96,165,250,0.1);color:#60a5fa;border:1px solid rgba(96,165,250,0.2);">
+                <span style="width:5px;height:5px;border-radius:50%;background:#60a5fa;display:inline-block;"></span> Cold
+              </span>
+            </td>
+            <td style="padding:1rem;font-size:0.8rem;color:#a1a1aa;">03/03/2026</td>
+            <td style="padding:1rem;text-align:center;">
+              <span title="Deck sent 02/02/2026" style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);">
+                <i data-lucide="check" style="width:11px;height:11px;color:#818cf8;"></i>
+              </span>
+            </td>
+            <td style="padding:1rem 1.5rem;text-align:right;">
+              <div style="display:flex;align-items:center;justify-content:flex-end;gap:0.375rem;">
+                <button style="background:none;border:none;cursor:pointer;padding:5px;border-radius:6px;color:#71717a;" onmouseover="this.style.background='#27272a';this.style.color='#a1a1aa'" onmouseout="this.style.background='none';this.style.color='#71717a'"><i data-lucide="plus-square" style="width:14px;height:14px;"></i></button>
+                <button style="background:none;border:none;cursor:pointer;padding:5px;border-radius:6px;color:#71717a;" onmouseover="this.style.background='#27272a';this.style.color='#a1a1aa'" onmouseout="this.style.background='none';this.style.color='#71717a'"><i data-lucide="pencil" style="width:14px;height:14px;"></i></button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Row 4: David Okoye -->
+          <tr style="border-bottom:1px solid #1f1f23;" onmouseover="this.style.background='rgba(39,39,42,0.3)'" onmouseout="this.style.background=''">
+            <td style="padding:1rem 1.5rem;"><input type="checkbox" style="accent-color:#6366f1;cursor:pointer;"></td>
+            <td style="padding:1rem 0;">
+              <div style="display:flex;align-items:center;gap:0.75rem;">
+                <div style="width:34px;height:34px;border-radius:50%;background:rgba(139,92,246,0.15);border:1px solid rgba(139,92,246,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <span style="font-size:0.75rem;font-weight:700;color:#a78bfa;">DO</span>
+                </div>
+                <div>
+                  <p style="font-size:0.875rem;font-weight:500;color:#f4f4f5;line-height:1.3;cursor:pointer;" onmouseover="this.style.color='#818cf8'" onmouseout="this.style.color='#f4f4f5'">David Okoye</p>
+                  <p style="font-size:0.75rem;color:#71717a;line-height:1.3;">BuildRight Construction</p>
+                </div>
+              </div>
+            </td>
+            <td style="padding:1rem;">
+              <div style="display:flex;align-items:center;gap:6px;" title="Mark Davis">
+                <div style="width:22px;height:22px;border-radius:50%;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.25);display:flex;align-items:center;justify-content:center;">
+                  <span style="font-size:0.5rem;font-weight:700;color:#a78bfa;">MD</span>
+                </div>
+                <span style="font-size:0.8rem;color:#a1a1aa;">Mark D.</span>
+              </div>
+            </td>
+            <td style="padding:1rem;">
+              <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:0.7rem;font-weight:500;background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.2);">
+                <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;display:inline-block;"></span> Active
+              </span>
+            </td>
+            <td style="padding:1rem;font-size:0.8rem;color:#a1a1aa;">03/03/2026</td>
+            <td style="padding:1rem;text-align:center;">
+              <span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#27272a;">
+                <i data-lucide="minus" style="width:11px;height:11px;color:#52525b;"></i>
+              </span>
+            </td>
+            <td style="padding:1rem 1.5rem;text-align:right;">
+              <div style="display:flex;align-items:center;justify-content:flex-end;gap:0.375rem;">
+                <button style="background:none;border:none;cursor:pointer;padding:5px;border-radius:6px;color:#71717a;" onmouseover="this.style.background='#27272a';this.style.color='#a1a1aa'" onmouseout="this.style.background='none';this.style.color='#71717a'"><i data-lucide="plus-square" style="width:14px;height:14px;"></i></button>
+                <button style="background:none;border:none;cursor:pointer;padding:5px;border-radius:6px;color:#71717a;" onmouseover="this.style.background='#27272a';this.style.color='#a1a1aa'" onmouseout="this.style.background='none';this.style.color='#71717a'"><i data-lucide="pencil" style="width:14px;height:14px;"></i></button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Row 5: Emma Walsh - Active, no deck -->
+          <tr style="border-bottom:1px solid #1f1f23;" onmouseover="this.style.background='rgba(39,39,42,0.3)'" onmouseout="this.style.background=''">
+            <td style="padding:1rem 1.5rem;"><input type="checkbox" style="accent-color:#6366f1;cursor:pointer;"></td>
+            <td style="padding:1rem 0;">
+              <div style="display:flex;align-items:center;gap:0.75rem;">
+                <div style="width:34px;height:34px;border-radius:50%;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <span style="font-size:0.75rem;font-weight:700;color:#fbbf24;">EW</span>
+                </div>
+                <div>
+                  <p style="font-size:0.875rem;font-weight:500;color:#f4f4f5;line-height:1.3;cursor:pointer;" onmouseover="this.style.color='#818cf8'" onmouseout="this.style.color='#f4f4f5'">Emma Walsh</p>
+                  <p style="font-size:0.75rem;color:#71717a;line-height:1.3;">Harvest Foods</p>
+                </div>
+              </div>
+            </td>
+            <td style="padding:1rem;">
+              <div style="display:flex;align-items:center;gap:6px;" title="Laura Chen">
+                <div style="width:22px;height:22px;border-radius:50%;background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25);display:flex;align-items:center;justify-content:center;">
+                  <span style="font-size:0.5rem;font-weight:700;color:#6ee7b7;">LC</span>
+                </div>
+                <span style="font-size:0.8rem;color:#a1a1aa;">Laura C.</span>
+              </div>
+            </td>
+            <td style="padding:1rem;">
+              <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:0.7rem;font-weight:500;background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.2);">
+                <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;display:inline-block;"></span> Active
+              </span>
+            </td>
+            <td style="padding:1rem;font-size:0.8rem;color:#a1a1aa;">02/03/2026</td>
+            <td style="padding:1rem;text-align:center;">
+              <span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#27272a;">
+                <i data-lucide="minus" style="width:11px;height:11px;color:#52525b;"></i>
+              </span>
+            </td>
+            <td style="padding:1rem 1.5rem;text-align:right;">
+              <div style="display:flex;align-items:center;justify-content:flex-end;gap:0.375rem;">
+                <button style="background:none;border:none;cursor:pointer;padding:5px;border-radius:6px;color:#71717a;" onmouseover="this.style.background='#27272a';this.style.color='#a1a1aa'" onmouseout="this.style.background='none';this.style.color='#71717a'"><i data-lucide="plus-square" style="width:14px;height:14px;"></i></button>
+                <button style="background:none;border:none;cursor:pointer;padding:5px;border-radius:6px;color:#71717a;" onmouseover="this.style.background='#27272a';this.style.color='#a1a1aa'" onmouseout="this.style.background='none';this.style.color='#71717a'"><i data-lucide="pencil" style="width:14px;height:14px;"></i></button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Row 6: James Carver - Cold -->
+          <tr style="border-bottom:1px solid #1f1f23;" onmouseover="this.style.background='rgba(39,39,42,0.3)'" onmouseout="this.style.background=''">
+            <td style="padding:1rem 1.5rem;"><input type="checkbox" style="accent-color:#6366f1;cursor:pointer;"></td>
+            <td style="padding:1rem 0;">
+              <div style="display:flex;align-items:center;gap:0.75rem;">
+                <div style="width:34px;height:34px;border-radius:50%;background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <span style="font-size:0.75rem;font-weight:700;color:#818cf8;">JC</span>
+                </div>
+                <div>
+                  <p style="font-size:0.875rem;font-weight:500;color:#f4f4f5;line-height:1.3;cursor:pointer;" onmouseover="this.style.color='#818cf8'" onmouseout="this.style.color='#f4f4f5'">James Carver</p>
+                  <p style="font-size:0.75rem;color:#71717a;line-height:1.3;">Pinnacle Tech</p>
+                </div>
+              </div>
+            </td>
+            <td style="padding:1rem;">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <div style="width:22px;height:22px;border-radius:50%;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);display:flex;align-items:center;justify-content:center;">
+                  <span style="font-size:0.5rem;font-weight:700;color:#818cf8;">JM</span>
+                </div>
+                <span style="font-size:0.8rem;color:#a1a1aa;">James M.</span>
+              </div>
+            </td>
+            <td style="padding:1rem;">
+              <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:0.7rem;font-weight:500;background:rgba(96,165,250,0.1);color:#60a5fa;border:1px solid rgba(96,165,250,0.2);">
+                <span style="width:5px;height:5px;border-radius:50%;background:#60a5fa;display:inline-block;"></span> Cold
+              </span>
+            </td>
+            <td style="padding:1rem;font-size:0.8rem;color:#f87171;">17/01/2026 <span style="color:#71717a;">(45d ago)</span></td>
+            <td style="padding:1rem;text-align:center;">
+              <span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);">
+                <i data-lucide="check" style="width:11px;height:11px;color:#818cf8;"></i>
+              </span>
+            </td>
+            <td style="padding:1rem 1.5rem;text-align:right;">
+              <div style="display:flex;align-items:center;justify-content:flex-end;gap:0.375rem;">
+                <button style="background:none;border:none;cursor:pointer;padding:5px;border-radius:6px;color:#71717a;" onmouseover="this.style.background='#27272a';this.style.color='#a1a1aa'" onmouseout="this.style.background='none';this.style.color='#71717a'"><i data-lucide="plus-square" style="width:14px;height:14px;"></i></button>
+                <button style="background:none;border:none;cursor:pointer;padding:5px;border-radius:6px;color:#71717a;" onmouseover="this.style.background='#27272a';this.style.color='#a1a1aa'" onmouseout="this.style.background='none';this.style.color='#71717a'"><i data-lucide="pencil" style="width:14px;height:14px;"></i></button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Row 7: Natasha Reid - Do Not Contact -->
+          <tr style="border-bottom:1px solid #1f1f23;opacity:0.75;" onmouseover="this.style.background='rgba(39,39,42,0.3)'" onmouseout="this.style.background=''">
+            <td style="padding:1rem 1.5rem;"><input type="checkbox" style="accent-color:#6366f1;cursor:pointer;"></td>
+            <td style="padding:1rem 0;">
+              <div style="display:flex;align-items:center;gap:0.75rem;">
+                <div style="width:34px;height:34px;border-radius:50%;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <span style="font-size:0.75rem;font-weight:700;color:#f87171;">NR</span>
+                </div>
+                <div>
+                  <p style="font-size:0.875rem;font-weight:500;color:#f4f4f5;line-height:1.3;">Natasha Reid</p>
+                  <p style="font-size:0.75rem;color:#71717a;line-height:1.3;">Urban Living</p>
+                </div>
+              </div>
+            </td>
+            <td style="padding:1rem;">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <div style="width:22px;height:22px;border-radius:50%;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.25);display:flex;align-items:center;justify-content:center;">
+                  <span style="font-size:0.5rem;font-weight:700;color:#a78bfa;">MD</span>
+                </div>
+                <span style="font-size:0.8rem;color:#a1a1aa;">Mark D.</span>
+              </div>
+            </td>
+            <td style="padding:1rem;">
+              <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:0.7rem;font-weight:500;background:rgba(239,68,68,0.1);color:#f87171;border:1px solid rgba(239,68,68,0.2);">
+                <i data-lucide="ban" style="width:9px;height:9px;"></i> DNC
+              </span>
+            </td>
+            <td style="padding:1rem;font-size:0.8rem;color:#71717a;">24/01/2026</td>
+            <td style="padding:1rem;text-align:center;">
+              <span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#27272a;">
+                <i data-lucide="minus" style="width:11px;height:11px;color:#52525b;"></i>
+              </span>
+            </td>
+            <td style="padding:1rem 1.5rem;text-align:right;"><span style="font-size:0.75rem;color:#52525b;">Restricted</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination + footer -->
+    <div style="padding:0.875rem 1.5rem;border-top:1px solid #27272a;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+      <p style="font-size:0.75rem;color:#71717a;">Showing <strong style="color:#a1a1aa;">1–25</strong> of <strong style="color:#a1a1aa;">284</strong> contacts</p>
+      <div style="display:flex;align-items:center;gap:0.375rem;">
+        <button style="background:#27272a;border:1px solid #3f3f46;border-radius:6px;padding:0.375rem 0.75rem;font-size:0.75rem;color:#71717a;cursor:not-allowed;font-family:Inter,system-ui,sans-serif;">← Previous</button>
+        <button style="background:#4f46e5;border:none;border-radius:6px;padding:0.375rem 0.75rem;font-size:0.75rem;color:white;cursor:pointer;font-family:Inter,system-ui,sans-serif;">1</button>
+        <button style="background:#27272a;border:1px solid #3f3f46;border-radius:6px;padding:0.375rem 0.75rem;font-size:0.75rem;color:#a1a1aa;cursor:pointer;font-family:Inter,system-ui,sans-serif;">2</button>
+        <button style="background:#27272a;border:1px solid #3f3f46;border-radius:6px;padding:0.375rem 0.75rem;font-size:0.75rem;color:#a1a1aa;cursor:pointer;font-family:Inter,system-ui,sans-serif;">3</button>
+        <span style="color:#71717a;font-size:0.75rem;">…</span>
+        <button style="background:#27272a;border:1px solid #3f3f46;border-radius:6px;padding:0.375rem 0.75rem;font-size:0.75rem;color:#a1a1aa;cursor:pointer;font-family:Inter,system-ui,sans-serif;">12</button>
+        <button style="background:#27272a;border:1px solid #3f3f46;border-radius:6px;padding:0.375rem 0.75rem;font-size:0.75rem;color:#a1a1aa;cursor:pointer;font-family:Inter,system-ui,sans-serif;">Next →</button>
+      </div>
+      <p style="font-size:0.7rem;color:#3f3f46;">TW Connect. Built for Tenacity Works.</p>
+    </div>
+  </div>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

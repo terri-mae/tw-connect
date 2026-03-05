@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>06 — Add / Edit Contact · TW Connect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter','system-ui','sans-serif'] } } } }</script>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #09090b; color: #f4f4f5; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 3px; }
+    .field-label { display: block; font-size: 0.7rem; font-weight: 600; color: #71717a; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; }
+    .field-input { width: 100%; background: #27272a; border: 1px solid #3f3f46; border-radius: 8px; padding: 0.5625rem 0.75rem; font-size: 0.875rem; color: #e4e4e7; outline: none; font-family: 'Inter', system-ui, sans-serif; transition: border-color 0.15s, box-shadow 0.15s; }
+    .field-input:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
+    .field-input::placeholder { color: #52525b; }
+    select.field-input { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+    .field-group { display: flex; flex-direction: column; gap: 4px; }
+  </style>
+</head>
+<body class="dark">
+
+  <!-- Blurred background (contact list) -->
+  <div style="position:fixed;inset:0;background:#09090b;filter:blur(2px);opacity:0.7;pointer-events:none;z-index:0;">
+    <div style="height:56px;background:#18181b;border-bottom:1px solid #27272a;"></div>
+    <div style="padding:2rem;color:#52525b;font-size:2rem;">— Contact list behind —</div>
+  </div>
+
+  <!-- Modal overlay -->
+  <div style="position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:10;display:flex;align-items:flex-start;justify-content:center;padding:2rem 1rem;overflow-y:auto;">
+    <div style="background:#18181b;border:1px solid #27272a;border-radius:16px;width:100%;max-width:680px;box-shadow:0 25px 60px rgba(0,0,0,0.6);flex-shrink:0;">
+
+      <!-- Modal header -->
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #27272a;display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <h2 style="font-size:1rem;font-weight:600;color:#f4f4f5;">Add New Contact</h2>
+          <p style="font-size:0.75rem;color:#71717a;margin-top:2px;">Press <kbd style="background:#27272a;border:1px solid #3f3f46;border-radius:4px;padding:1px 5px;font-family:monospace;font-size:0.7rem;color:#a1a1aa;">N</kbd> anywhere to open this modal</p>
+        </div>
+        <button style="background:none;border:none;cursor:pointer;color:#71717a;padding:4px;border-radius:6px;" onmouseover="this.style.background='#27272a';this.style.color='#e4e4e7'" onmouseout="this.style.background='none';this.style.color='#71717a'">
+          <i data-lucide="x" style="width:18px;height:18px;"></i>
+        </button>
+      </div>
+
+      <!-- Form body -->
+      <div style="padding:1.5rem;">
+        <form>
+          <!-- Row 1: First name + Last name -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+            <div class="field-group">
+              <label class="field-label">First name <span style="color:#f87171;">*</span></label>
+              <input type="text" class="field-input" placeholder="Sarah" value="Sarah">
+            </div>
+            <div class="field-group">
+              <label class="field-label">Last name <span style="color:#f87171;">*</span></label>
+              <input type="text" class="field-input" placeholder="Mitchell" value="Mitchell">
+            </div>
+          </div>
+
+          <!-- Row 2: Email + Phone -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+            <div class="field-group">
+              <label class="field-label">Email address</label>
+              <div style="position:relative;">
+                <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#52525b;">
+                  <i data-lucide="mail" style="width:13px;height:13px;"></i>
+                </span>
+                <input type="email" class="field-input" style="padding-left:2.125rem;" placeholder="name@company.com" value="s.mitchell@apexmfg.co.uk">
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Telephone</label>
+              <div style="position:relative;">
+                <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#52525b;">
+                  <i data-lucide="phone" style="width:13px;height:13px;"></i>
+                </span>
+                <input type="tel" class="field-input" style="padding-left:2.125rem;" placeholder="+44 7700 000000" value="+44 7712 345 678">
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 3: Company + Job title -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+            <div class="field-group">
+              <label class="field-label">Company <span style="color:#f87171;">*</span></label>
+              <div style="position:relative;">
+                <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#52525b;">
+                  <i data-lucide="building-2" style="width:13px;height:13px;"></i>
+                </span>
+                <select class="field-input" style="padding-left:2.125rem;">
+                  <option value="">Select company…</option>
+                  <option selected>Apex Manufacturing Ltd</option>
+                  <option>Meridian Group</option>
+                  <option>Stratum Consulting</option>
+                  <option>BuildRight Construction</option>
+                  <option>Harvest Foods</option>
+                </select>
+              </div>
+              <a href="#" style="font-size:0.7rem;color:#818cf8;text-decoration:none;margin-top:3px;">+ Add new company</a>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Job title</label>
+              <input type="text" class="field-input" placeholder="e.g. Head of Operations" value="Head of Operations">
+            </div>
+          </div>
+
+          <!-- Row 4: Location + LinkedIn -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+            <div class="field-group">
+              <label class="field-label">Location</label>
+              <div style="position:relative;">
+                <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#52525b;">
+                  <i data-lucide="map-pin" style="width:13px;height:13px;"></i>
+                </span>
+                <input type="text" class="field-input" style="padding-left:2.125rem;" placeholder="City or region" value="Birmingham, UK">
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">LinkedIn URL</label>
+              <div style="position:relative;">
+                <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#52525b;">
+                  <i data-lucide="linkedin" style="width:13px;height:13px;"></i>
+                </span>
+                <input type="url" class="field-input" style="padding-left:2.125rem;" placeholder="linkedin.com/in/…" value="linkedin.com/in/sarah-mitchell-ops">
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 5: Owner + Status -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+            <div class="field-group">
+              <label class="field-label">Owner <span style="color:#f87171;">*</span></label>
+              <select class="field-input">
+                <option selected>James Mentz (me)</option>
+                <option>Laura Chen</option>
+                <option>Mark Davis</option>
+                <option>Sarah O'Brien</option>
+                <option>Dan Walsh</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Status</label>
+              <select class="field-input">
+                <option selected>Active</option>
+                <option>Cold</option>
+                <option>Do Not Contact</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Tags -->
+          <div class="field-group" style="margin-bottom:1rem;">
+            <label class="field-label">Tags <span style="font-size:0.65rem;color:#52525b;text-transform:none;letter-spacing:0;">(comma-separated)</span></label>
+            <input type="text" class="field-input" placeholder="e.g. manufacturing, prospect, q2-priority" value="manufacturing, prospect, q2-priority">
+            <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:6px;">
+              <span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:12px;font-size:0.7rem;background:#27272a;color:#a1a1aa;border:1px solid #3f3f46;">manufacturing <button style="background:none;border:none;cursor:pointer;color:#71717a;padding:0;line-height:1;margin-left:2px;" onmouseover="this.style.color='#f87171'" onmouseout="this.style.color='#71717a'">×</button></span>
+              <span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:12px;font-size:0.7rem;background:#27272a;color:#a1a1aa;border:1px solid #3f3f46;">prospect <button style="background:none;border:none;cursor:pointer;color:#71717a;padding:0;line-height:1;margin-left:2px;" onmouseover="this.style.color='#f87171'" onmouseout="this.style.color='#71717a'">×</button></span>
+              <span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:12px;font-size:0.7rem;background:#27272a;color:#a1a1aa;border:1px solid #3f3f46;">q2-priority <button style="background:none;border:none;cursor:pointer;color:#71717a;padding:0;line-height:1;margin-left:2px;" onmouseover="this.style.color='#f87171'" onmouseout="this.style.color='#71717a'">×</button></span>
+            </div>
+          </div>
+
+          <!-- Credentials deck -->
+          <div style="margin-bottom:1rem;padding:1rem;background:#27272a;border:1px solid #3f3f46;border-radius:10px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+              <label style="font-size:0.8rem;font-weight:500;color:#e4e4e7;display:flex;align-items:center;gap:6px;cursor:pointer;">
+                <input type="checkbox" id="deckSent" checked style="accent-color:#6366f1;width:15px;height:15px;cursor:pointer;">
+                <i data-lucide="file-check" style="width:14px;height:14px;color:#818cf8;"></i>
+                Credentials deck sent
+              </label>
+            </div>
+            <div id="deckDateField">
+              <label class="field-label" style="margin-bottom:4px;">Date sent</label>
+              <input type="text" class="field-input" value="15/01/2026" style="max-width:180px;" placeholder="dd/mm/yyyy">
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div class="field-group" style="margin-bottom:0;">
+            <label class="field-label">Notes</label>
+            <textarea class="field-input" rows="3" style="resize:vertical;line-height:1.6;" placeholder="Any notes about this contact…">Key decision-maker for all external supplier relationships. Prefers email over phone. Usually responds same day.</textarea>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div style="padding:1.125rem 1.5rem;border-top:1px solid #27272a;display:flex;align-items:center;justify-content:space-between;">
+        <p style="font-size:0.75rem;color:#71717a;">
+          <span style="color:#f87171;">*</span> Required fields
+        </p>
+        <div style="display:flex;align-items:center;gap:0.625rem;">
+          <button style="background:#27272a;border:1px solid #3f3f46;border-radius:8px;padding:0.5rem 1.25rem;font-size:0.875rem;font-weight:500;color:#a1a1aa;cursor:pointer;font-family:Inter,system-ui,sans-serif;" onmouseover="this.style.borderColor='#52525b'" onmouseout="this.style.borderColor='#3f3f46'">
+            Cancel
+          </button>
+          <button style="background:#4f46e5;border:none;border-radius:8px;padding:0.5rem 1.5rem;font-size:0.875rem;font-weight:600;color:white;cursor:pointer;font-family:Inter,system-ui,sans-serif;display:flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(99,102,241,0.3);" onmouseover="this.style.background='#6366f1'" onmouseout="this.style.background='#4f46e5'">
+            <i data-lucide="check" style="width:14px;height:14px;"></i> Save Contact
+          </button>
+        </div>
+      </div>
+
+    </div><!-- end modal -->
+  </div><!-- end overlay -->
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

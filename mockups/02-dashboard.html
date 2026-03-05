@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>02 — Dashboard · TW Connect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter','system-ui','sans-serif'] } } } }</script>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #09090b; color: #f4f4f5; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 3px; }
+  </style>
+</head>
+<body class="dark">
+<div style="display:flex; height:100vh; overflow:hidden;">
+
+  <!-- SIDEBAR -->
+  <aside style="width:220px; background:#18181b; border-right:1px solid #27272a; display:flex; flex-direction:column; flex-shrink:0;">
+    <!-- Logo -->
+    <div style="padding:1.25rem 1rem; border-bottom:1px solid #27272a; display:flex; align-items:center; gap:0.625rem;">
+      <div style="width:30px;height:30px;background:#4f46e5;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(99,102,241,0.3);">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <span style="font-size:0.875rem;font-weight:700;color:#f4f4f5;">TW Connect</span>
+    </div>
+    <!-- Nav -->
+    <nav style="flex:1;padding:0.75rem 0.5rem;overflow-y:auto;">
+      <div style="font-size:0.65rem;font-weight:600;color:#52525b;text-transform:uppercase;letter-spacing:0.08em;padding:0 0.75rem;margin-bottom:0.375rem;">Main</div>
+      <a href="#" style="display:flex;align-items:center;gap:0.625rem;padding:0.5rem 0.75rem;border-radius:8px;background:rgba(99,102,241,0.12);color:#818cf8;font-size:0.8125rem;font-weight:500;text-decoration:none;margin-bottom:1px;">
+        <i data-lucide="layout-dashboard" style="width:15px;height:15px;flex-shrink:0;"></i> Dashboard
+      </a>
+      <a href="#" style="display:flex;align-items:center;gap:0.625rem;padding:0.5rem 0.75rem;border-radius:8px;color:#71717a;font-size:0.8125rem;font-weight:500;text-decoration:none;margin-bottom:1px;transition:all 0.15s;" onmouseover="this.style.background='rgba(39,39,42,0.7)';this.style.color='#e4e4e7'" onmouseout="this.style.background='';this.style.color='#71717a'">
+        <i data-lucide="users" style="width:15px;height:15px;flex-shrink:0;"></i> Contacts
+      </a>
+      <a href="#" style="display:flex;align-items:center;gap:0.625rem;padding:0.5rem 0.75rem;border-radius:8px;color:#71717a;font-size:0.8125rem;font-weight:500;text-decoration:none;margin-bottom:1px;" onmouseover="this.style.background='rgba(39,39,42,0.7)';this.style.color='#e4e4e7'" onmouseout="this.style.background='';this.style.color='#71717a'">
+        <i data-lucide="building-2" style="width:15px;height:15px;flex-shrink:0;"></i> Companies
+      </a>
+      <a href="#" style="display:flex;align-items:center;gap:0.625rem;padding:0.5rem 0.75rem;border-radius:8px;color:#71717a;font-size:0.8125rem;font-weight:500;text-decoration:none;margin-bottom:1px;" onmouseover="this.style.background='rgba(39,39,42,0.7)';this.style.color='#e4e4e7'" onmouseout="this.style.background='';this.style.color='#71717a'">
+        <i data-lucide="file-check" style="width:15px;height:15px;flex-shrink:0;"></i> Credentials Deck
+      </a>
+      <div style="height:1px;background:#27272a;margin:0.625rem 0.5rem;"></div>
+      <a href="#" style="display:flex;align-items:center;gap:0.625rem;padding:0.5rem 0.75rem;border-radius:8px;color:#71717a;font-size:0.8125rem;font-weight:500;text-decoration:none;" onmouseover="this.style.background='rgba(39,39,42,0.7)';this.style.color='#e4e4e7'" onmouseout="this.style.background='';this.style.color='#71717a'">
+        <i data-lucide="settings" style="width:15px;height:15px;flex-shrink:0;"></i> Settings
+      </a>
+    </nav>
+    <!-- User -->
+    <div style="padding:0.875rem 0.75rem;border-top:1px solid #27272a;display:flex;align-items:center;gap:0.625rem;">
+      <div style="width:28px;height:28px;border-radius:50%;background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span style="font-size:0.625rem;font-weight:700;color:#818cf8;">JM</span>
+      </div>
+      <div style="flex:1;min-width:0;">
+        <p style="font-size:0.75rem;font-weight:600;color:#f4f4f5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2;">James Mentz</p>
+        <p style="font-size:0.65rem;color:#71717a;line-height:1.2;">Admin</p>
+      </div>
+      <button style="background:none;border:none;cursor:pointer;color:#52525b;padding:2px;" onmouseover="this.style.color='#a1a1aa'" onmouseout="this.style.color='#52525b'">
+        <i data-lucide="log-out" style="width:13px;height:13px;"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+    <!-- Header -->
+    <header style="background:rgba(9,9,11,0.95);border-bottom:1px solid #27272a;padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;backdrop-filter:blur(12px);">
+      <div>
+        <h1 style="font-size:0.9375rem;font-weight:600;color:#f4f4f5;line-height:1.2;">Dashboard</h1>
+        <p style="font-size:0.7rem;color:#71717a;">Wednesday, 4 March 2026</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <!-- Global search -->
+        <div style="position:relative;">
+          <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#52525b;">
+            <i data-lucide="search" style="width:13px;height:13px;"></i>
+          </span>
+          <input type="text" placeholder="Search contacts & companies…"
+                 style="background:#27272a;border:1px solid #3f3f46;border-radius:8px;padding:0.4375rem 3rem 0.4375rem 2rem;font-size:0.8125rem;color:#a1a1aa;width:260px;outline:none;font-family:Inter,system-ui,sans-serif;">
+          <kbd style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:#3f3f46;color:#71717a;font-size:0.6rem;padding:2px 5px;border-radius:4px;font-family:monospace;">⌘K</kbd>
+        </div>
+        <button style="background:#4f46e5;color:white;border:none;border-radius:8px;padding:0.4375rem 0.875rem;font-size:0.8125rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:Inter,system-ui,sans-serif;">
+          <i data-lucide="plus" style="width:13px;height:13px;"></i> Add Contact
+        </button>
+      </div>
+    </header>
+
+    <!-- Scrollable content -->
+    <div style="flex:1;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:1.25rem;">
+
+      <!-- STATS ROW -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;">
+        <!-- Total Contacts -->
+        <div style="background:#18181b;border:1px solid #27272a;border-radius:12px;padding:1.25rem;cursor:pointer;transition:border-color 0.15s;" onmouseover="this.style.borderColor='#3f3f46'" onmouseout="this.style.borderColor='#27272a'">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.875rem;">
+            <span style="font-size:0.65rem;font-weight:600;color:#71717a;text-transform:uppercase;letter-spacing:0.06em;">Total Contacts</span>
+            <div style="width:30px;height:30px;background:rgba(99,102,241,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+              <i data-lucide="users" style="width:13px;height:13px;color:#818cf8;"></i>
+            </div>
+          </div>
+          <p style="font-size:2rem;font-weight:700;color:#f4f4f5;line-height:1;">284</p>
+          <p style="font-size:0.7rem;color:#71717a;margin-top:0.375rem;"><span style="color:#34d399;">+23</span> added this month</p>
+        </div>
+        <!-- Companies -->
+        <div style="background:#18181b;border:1px solid #27272a;border-radius:12px;padding:1.25rem;cursor:pointer;" onmouseover="this.style.borderColor='#3f3f46'" onmouseout="this.style.borderColor='#27272a'">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.875rem;">
+            <span style="font-size:0.65rem;font-weight:600;color:#71717a;text-transform:uppercase;letter-spacing:0.06em;">Companies</span>
+            <div style="width:30px;height:30px;background:rgba(99,102,241,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+              <i data-lucide="building-2" style="width:13px;height:13px;color:#818cf8;"></i>
+            </div>
+          </div>
+          <p style="font-size:2rem;font-weight:700;color:#f4f4f5;line-height:1;">47</p>
+          <p style="font-size:0.7rem;color:#71717a;margin-top:0.375rem;">Across 5 industries</p>
+        </div>
+        <!-- Interactions -->
+        <div style="background:#18181b;border:1px solid #27272a;border-radius:12px;padding:1.25rem;cursor:pointer;" onmouseover="this.style.borderColor='#3f3f46'" onmouseout="this.style.borderColor='#27272a'">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.875rem;">
+            <span style="font-size:0.65rem;font-weight:600;color:#71717a;text-transform:uppercase;letter-spacing:0.06em;">Interactions</span>
+            <div style="width:30px;height:30px;background:rgba(99,102,241,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+              <i data-lucide="message-square" style="width:13px;height:13px;color:#818cf8;"></i>
+            </div>
+          </div>
+          <p style="font-size:2rem;font-weight:700;color:#f4f4f5;line-height:1;">1,203</p>
+          <p style="font-size:0.7rem;color:#71717a;margin-top:0.375rem;"><span style="color:#34d399;">+41</span> this week</p>
+        </div>
+        <!-- Deck Sent -->
+        <div style="background:#18181b;border:1px solid #27272a;border-radius:12px;padding:1.25rem;cursor:pointer;" onmouseover="this.style.borderColor='#3f3f46'" onmouseout="this.style.borderColor='#27272a'">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.875rem;">
+            <span style="font-size:0.65rem;font-weight:600;color:#71717a;text-transform:uppercase;letter-spacing:0.06em;">Deck Sent</span>
+            <div style="width:30px;height:30px;background:rgba(99,102,241,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+              <i data-lucide="file-check" style="width:13px;height:13px;color:#818cf8;"></i>
+            </div>
+          </div>
+          <p style="font-size:2rem;font-weight:700;color:#f4f4f5;line-height:1;">89</p>
+          <p style="font-size:0.7rem;color:#71717a;margin-top:0.375rem;"><span style="color:#a1a1aa;">195</span> not yet sent</p>
+        </div>
+      </div>
+
+      <!-- CHARTS ROW -->
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:1rem;">
+        <!-- Contacts by Owner -->
+        <div style="background:#18181b;border:1px solid #27272a;border-radius:12px;padding:1.25rem;">
+          <div style="margin-bottom:1rem;">
+            <h3 style="font-size:0.875rem;font-weight:600;color:#f4f4f5;">Contacts by Owner</h3>
+            <p style="font-size:0.7rem;color:#71717a;margin-top:2px;">Distribution across the team</p>
+          </div>
+          <canvas id="ownerChart" style="max-height:180px;"></canvas>
+        </div>
+        <!-- Credentials Deck donut -->
+        <div style="background:#18181b;border:1px solid #27272a;border-radius:12px;padding:1.25rem;">
+          <div style="margin-bottom:0.875rem;">
+            <h3 style="font-size:0.875rem;font-weight:600;color:#f4f4f5;">Credentials Deck</h3>
+            <p style="font-size:0.7rem;color:#71717a;margin-top:2px;">Sent vs not sent</p>
+          </div>
+          <div style="position:relative;display:flex;align-items:center;justify-content:center;height:140px;">
+            <canvas id="deckChart"></canvas>
+            <div style="position:absolute;text-align:center;pointer-events:none;">
+              <p style="font-size:1.5rem;font-weight:700;color:#f4f4f5;">31%</p>
+              <p style="font-size:0.7rem;color:#71717a;">Sent</p>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:center;gap:1.25rem;margin-top:0.75rem;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:#6366f1;"></div>
+              <span style="font-size:0.7rem;color:#a1a1aa;">Sent (89)</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:#3f3f46;"></div>
+              <span style="font-size:0.7rem;color:#a1a1aa;">Pending (195)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM ROW -->
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:1rem;">
+
+        <!-- Recent Interactions -->
+        <div style="background:#18181b;border:1px solid #27272a;border-radius:12px;overflow:hidden;">
+          <div style="padding:1rem 1.25rem;border-bottom:1px solid #27272a;display:flex;align-items:center;justify-content:space-between;">
+            <div>
+              <h3 style="font-size:0.875rem;font-weight:600;color:#f4f4f5;">Recent Interactions</h3>
+              <p style="font-size:0.7rem;color:#71717a;margin-top:2px;">Last 10 logged</p>
+            </div>
+            <a href="#" style="font-size:0.75rem;color:#818cf8;text-decoration:none;">View all →</a>
+          </div>
+
+          <!-- Interaction rows -->
+          <div id="interactions-list">
+            <!-- Row 1 -->
+            <div style="padding:0.875rem 1.25rem;display:flex;align-items:flex-start;gap:0.75rem;border-bottom:1px solid #1f1f23;" onmouseover="this.style.background='rgba(39,39,42,0.4)'" onmouseout="this.style.background=''">
+              <div style="width:30px;height:30px;border-radius:8px;background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+                <i data-lucide="mail" style="width:12px;height:12px;color:#60a5fa;"></i>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <p style="font-size:0.8125rem;font-weight:500;color:#f4f4f5;">Sarah Mitchell <span style="color:#71717a;font-weight:400;">· Apex Manufacturing</span></p>
+                  <span style="font-size:0.7rem;color:#71717a;flex-shrink:0;margin-left:0.5rem;">04/03/2026</span>
+                </div>
+                <p style="font-size:0.75rem;color:#a1a1aa;margin-top:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Sent follow-up re: Q2 projects. She confirmed interest in scheduling a discovery call next week.</p>
+              </div>
+              <div style="width:22px;height:22px;border-radius:50%;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="James Mentz">
+                <span style="font-size:0.5rem;font-weight:700;color:#818cf8;">JM</span>
+              </div>
+            </div>
+            <!-- Row 2 -->
+            <div style="padding:0.875rem 1.25rem;display:flex;align-items:flex-start;gap:0.75rem;border-bottom:1px solid #1f1f23;" onmouseover="this.style.background='rgba(39,39,42,0.4)'" onmouseout="this.style.background=''">
+              <div style="width:30px;height:30px;border-radius:8px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+                <i data-lucide="phone" style="width:12px;height:12px;color:#4ade80;"></i>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <p style="font-size:0.8125rem;font-weight:500;color:#f4f4f5;">Tom Brennan <span style="color:#71717a;font-weight:400;">· Meridian Group</span></p>
+                  <span style="font-size:0.7rem;color:#71717a;flex-shrink:0;margin-left:0.5rem;">04/03/2026</span>
+                </div>
+                <p style="font-size:0.75rem;color:#a1a1aa;margin-top:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">15-min call. Discussed scope for web redesign. Wants formal proposal by end of month.</p>
+              </div>
+              <div style="width:22px;height:22px;border-radius:50%;background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="Laura Chen">
+                <span style="font-size:0.5rem;font-weight:700;color:#6ee7b7;">LC</span>
+              </div>
+            </div>
+            <!-- Row 3 -->
+            <div style="padding:0.875rem 1.25rem;display:flex;align-items:flex-start;gap:0.75rem;border-bottom:1px solid #1f1f23;" onmouseover="this.style.background='rgba(39,39,42,0.4)'" onmouseout="this.style.background=''">
+              <div style="width:30px;height:30px;border-radius:8px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+                <i data-lucide="linkedin" style="width:12px;height:12px;color:#818cf8;"></i>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <p style="font-size:0.8125rem;font-weight:500;color:#f4f4f5;">Priya Patel <span style="color:#71717a;font-weight:400;">· Stratum Consulting</span></p>
+                  <span style="font-size:0.7rem;color:#71717a;flex-shrink:0;margin-left:0.5rem;">03/03/2026</span>
+                </div>
+                <p style="font-size:0.75rem;color:#a1a1aa;margin-top:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Connected on LinkedIn, sent intro message about our digital strategy services.</p>
+              </div>
+              <div style="width:22px;height:22px;border-radius:50%;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="James Mentz">
+                <span style="font-size:0.5rem;font-weight:700;color:#818cf8;">JM</span>
+              </div>
+            </div>
+            <!-- Row 4 -->
+            <div style="padding:0.875rem 1.25rem;display:flex;align-items:flex-start;gap:0.75rem;border-bottom:1px solid #1f1f23;" onmouseover="this.style.background='rgba(39,39,42,0.4)'" onmouseout="this.style.background=''">
+              <div style="width:30px;height:30px;border-radius:8px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+                <i data-lucide="users" style="width:12px;height:12px;color:#c084fc;"></i>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <p style="font-size:0.8125rem;font-weight:500;color:#f4f4f5;">David Okoye <span style="color:#71717a;font-weight:400;">· BuildRight Construction</span></p>
+                  <span style="font-size:0.7rem;color:#71717a;flex-shrink:0;margin-left:0.5rem;">03/03/2026</span>
+                </div>
+                <p style="font-size:0.75rem;color:#a1a1aa;margin-top:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">In-person meeting at their offices. Great rapport — interested in branding refresh and signage.</p>
+              </div>
+              <div style="width:22px;height:22px;border-radius:50%;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="Mark Davis">
+                <span style="font-size:0.5rem;font-weight:700;color:#a78bfa;">MD</span>
+              </div>
+            </div>
+            <!-- Row 5 -->
+            <div style="padding:0.875rem 1.25rem;display:flex;align-items:flex-start;gap:0.75rem;" onmouseover="this.style.background='rgba(39,39,42,0.4)'" onmouseout="this.style.background=''">
+              <div style="width:30px;height:30px;border-radius:8px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+                <i data-lucide="message-circle" style="width:12px;height:12px;color:#fbbf24;"></i>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <p style="font-size:0.8125rem;font-weight:500;color:#f4f4f5;">Emma Walsh <span style="color:#71717a;font-weight:400;">· Harvest Foods</span></p>
+                  <span style="font-size:0.7rem;color:#71717a;flex-shrink:0;margin-left:0.5rem;">02/03/2026</span>
+                </div>
+                <p style="font-size:0.75rem;color:#a1a1aa;margin-top:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">WhatsApp voice note. Emma keen to move forward, pending board sign-off next Tuesday.</p>
+              </div>
+              <div style="width:22px;height:22px;border-radius:50%;background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="Laura Chen">
+                <span style="font-size:0.5rem;font-weight:700;color:#6ee7b7;">LC</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Needs Follow-up -->
+        <div style="background:#18181b;border:1px solid #27272a;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;">
+          <div style="padding:1rem 1.25rem;border-bottom:1px solid #27272a;">
+            <h3 style="font-size:0.875rem;font-weight:600;color:#f4f4f5;display:flex;align-items:center;gap:8px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:#f59e0b;display:inline-block;animation:pulse 2s infinite;"></span>
+              Needs Follow-up
+            </h3>
+            <p style="font-size:0.7rem;color:#71717a;margin-top:2px;">No interaction in 30+ days (12)</p>
+          </div>
+          <div style="padding:0.75rem;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:0.375rem;">
+            <div style="padding:0.625rem 0.75rem;border-radius:8px;background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.12);cursor:pointer;" onmouseover="this.style.background='rgba(245,158,11,0.1)'" onmouseout="this.style.background='rgba(245,158,11,0.05)'">
+              <p style="font-size:0.8rem;font-weight:500;color:#f4f4f5;">James Carver</p>
+              <p style="font-size:0.7rem;color:#a1a1aa;">Pinnacle Tech · <span style="color:#fbbf24;">45 days ago</span></p>
+            </div>
+            <div style="padding:0.625rem 0.75rem;border-radius:8px;background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.12);cursor:pointer;" onmouseover="this.style.background='rgba(245,158,11,0.1)'" onmouseout="this.style.background='rgba(245,158,11,0.05)'">
+              <p style="font-size:0.8rem;font-weight:500;color:#f4f4f5;">Natasha Reid</p>
+              <p style="font-size:0.7rem;color:#a1a1aa;">Urban Living · <span style="color:#fbbf24;">38 days ago</span></p>
+            </div>
+            <div style="padding:0.625rem 0.75rem;border-radius:8px;background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.12);cursor:pointer;" onmouseover="this.style.background='rgba(245,158,11,0.1)'" onmouseout="this.style.background='rgba(245,158,11,0.05)'">
+              <p style="font-size:0.8rem;font-weight:500;color:#f4f4f5;">Ben Thorpe</p>
+              <p style="font-size:0.7rem;color:#a1a1aa;">Orion Media · <span style="color:#fbbf24;">35 days ago</span></p>
+            </div>
+            <div style="padding:0.625rem 0.75rem;border-radius:8px;background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.12);cursor:pointer;" onmouseover="this.style.background='rgba(245,158,11,0.1)'" onmouseout="this.style.background='rgba(245,158,11,0.05)'">
+              <p style="font-size:0.8rem;font-weight:500;color:#f4f4f5;">Fatima Al-Rashid</p>
+              <p style="font-size:0.7rem;color:#a1a1aa;">Nexus Group · <span style="color:#fbbf24;">33 days ago</span></p>
+            </div>
+            <div style="padding:0.625rem 0.75rem;border-radius:8px;background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.12);cursor:pointer;" onmouseover="this.style.background='rgba(245,158,11,0.1)'" onmouseout="this.style.background='rgba(245,158,11,0.05)'">
+              <p style="font-size:0.8rem;font-weight:500;color:#f4f4f5;">Liam Murphy</p>
+              <p style="font-size:0.7rem;color:#a1a1aa;">ClearBridge · <span style="color:#fbbf24;">31 days ago</span></p>
+            </div>
+            <a href="#" style="display:block;text-align:center;font-size:0.75rem;color:#818cf8;text-decoration:none;padding:0.375rem;margin-top:0.25rem;">View all 12 →</a>
+          </div>
+        </div>
+
+      </div><!-- end bottom row -->
+
+    </div><!-- end scrollable -->
+
+    <!-- Footer -->
+    <footer style="padding:0.625rem 1.5rem;border-top:1px solid #27272a;text-align:center;">
+      <p style="font-size:0.7rem;color:#3f3f46;">TW Connect. Built for Tenacity Works.</p>
+    </footer>
+  </div><!-- end main -->
+
+</div><!-- end flex wrapper -->
+
+<style>
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+</style>
+
+<script>
+lucide.createIcons();
+
+// Contacts by Owner - Bar Chart
+const ownerCtx = document.getElementById('ownerChart').getContext('2d');
+new Chart(ownerCtx, {
+  type: 'bar',
+  data: {
+    labels: ['James Mentz','Laura Chen','Mark Davis','Sarah O\'Brien','Dan Walsh'],
+    datasets: [{
+      data: [92, 78, 61, 34, 19],
+      backgroundColor: 'rgba(99,102,241,0.55)',
+      borderColor: 'rgba(99,102,241,0.9)',
+      borderWidth: 1,
+      borderRadius: 5,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#18181b', titleColor: '#e4e4e7',
+        bodyColor: '#a1a1aa', borderColor: '#3f3f46', borderWidth: 1,
+        callbacks: { label: ctx => ` ${ctx.parsed.y} contacts` }
+      }
+    },
+    scales: {
+      x: { grid: { color: 'rgba(63,63,70,0.4)', drawBorder: false }, ticks: { color: '#71717a', font: { size: 11, family: 'Inter' } } },
+      y: { grid: { color: 'rgba(63,63,70,0.4)', drawBorder: false }, ticks: { color: '#71717a', font: { size: 11, family: 'Inter' } }, beginAtZero: true }
+    }
+  }
+});
+
+// Credentials Deck - Doughnut
+const deckCtx = document.getElementById('deckChart').getContext('2d');
+new Chart(deckCtx, {
+  type: 'doughnut',
+  data: {
+    datasets: [{
+      data: [89, 195],
+      backgroundColor: ['rgba(99,102,241,0.8)', 'rgba(63,63,70,0.5)'],
+      borderColor: ['rgba(99,102,241,1)', 'rgba(63,63,70,0.8)'],
+      borderWidth: 1, hoverOffset: 3
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false, cutout: '74%',
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#18181b', titleColor: '#e4e4e7',
+        bodyColor: '#a1a1aa', borderColor: '#3f3f46', borderWidth: 1,
+        callbacks: { label: ctx => ` ${['Sent','Not Sent'][ctx.dataIndex]}: ${ctx.parsed}` }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>

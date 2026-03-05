@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>07 — Log Interaction · TW Connect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['Inter','system-ui','sans-serif'] } } } }</script>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #09090b; color: #f4f4f5; }
+    .field-label { display: block; font-size: 0.7rem; font-weight: 600; color: #71717a; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; }
+    .field-input { width: 100%; background: #27272a; border: 1px solid #3f3f46; border-radius: 8px; padding: 0.5625rem 0.75rem; font-size: 0.875rem; color: #e4e4e7; outline: none; font-family: 'Inter', system-ui, sans-serif; transition: border-color 0.15s, box-shadow 0.15s; }
+    .field-input:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
+    .field-input::placeholder { color: #52525b; }
+    .method-btn { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 0.625rem 0.5rem; border-radius: 10px; border: 1px solid #3f3f46; background: #27272a; cursor: pointer; font-family: 'Inter', system-ui, sans-serif; transition: all 0.15s; flex: 1; }
+    .method-btn:hover { border-color: rgba(99,102,241,0.4); background: rgba(99,102,241,0.08); }
+    .method-btn.active { border-color: rgba(99,102,241,0.6); background: rgba(99,102,241,0.12); }
+    .method-btn span { font-size: 0.7rem; color: #71717a; font-weight: 500; white-space: nowrap; }
+    .method-btn.active span { color: #818cf8; }
+  </style>
+</head>
+<body class="dark">
+
+  <!-- Blurred contact detail in background -->
+  <div style="position:fixed;inset:0;background:#09090b;z-index:0;">
+    <div style="height:56px;background:#18181b;border-bottom:1px solid #27272a;padding:0 1.5rem;display:flex;align-items:center;">
+      <span style="font-size:0.9rem;font-weight:600;color:#3f3f46;">Contact detail — blurred background</span>
+    </div>
+  </div>
+
+  <!-- Modal overlay -->
+  <div style="position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:10;display:flex;align-items:center;justify-content:center;padding:1rem;">
+    <div style="background:#18181b;border:1px solid #27272a;border-radius:16px;width:100%;max-width:520px;box-shadow:0 25px 60px rgba(0,0,0,0.6);">
+
+      <!-- Modal header -->
+      <div style="padding:1.25rem 1.5rem;border-bottom:1px solid #27272a;display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <h2 style="font-size:1rem;font-weight:600;color:#f4f4f5;display:flex;align-items:center;gap:8px;">
+            <i data-lucide="plus-square" style="width:16px;height:16px;color:#818cf8;"></i>
+            Log Interaction
+          </h2>
+          <p style="font-size:0.75rem;color:#71717a;margin-top:2px;">For <strong style="color:#a1a1aa;">Sarah Mitchell</strong> · Apex Manufacturing Ltd</p>
+        </div>
+        <button style="background:none;border:none;cursor:pointer;color:#71717a;padding:4px;border-radius:6px;" onmouseover="this.style.background='#27272a';this.style.color='#e4e4e7'" onmouseout="this.style.background='none';this.style.color='#71717a'">
+          <i data-lucide="x" style="width:18px;height:18px;"></i>
+        </button>
+      </div>
+
+      <!-- Form body -->
+      <div style="padding:1.5rem;display:flex;flex-direction:column;gap:1.25rem;">
+
+        <!-- Date + Logged by row -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div>
+            <label class="field-label">Date</label>
+            <div style="position:relative;">
+              <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#52525b;">
+                <i data-lucide="calendar" style="width:13px;height:13px;"></i>
+              </span>
+              <input type="text" class="field-input" style="padding-left:2.125rem;" value="04/03/2026">
+            </div>
+          </div>
+          <div>
+            <label class="field-label">Logged by</label>
+            <div style="background:#27272a;border:1px solid #3f3f46;border-radius:8px;padding:0.5625rem 0.75rem;display:flex;align-items:center;gap:8px;">
+              <div style="width:20px;height:20px;border-radius:50%;background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <span style="font-size:0.45rem;font-weight:700;color:#818cf8;">JM</span>
+              </div>
+              <span style="font-size:0.875rem;color:#a1a1aa;">James Mentz</span>
+              <span style="font-size:0.7rem;color:#52525b;margin-left:auto;">(you)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Method selection -->
+        <div>
+          <label class="field-label">Method <span style="color:#f87171;">*</span></label>
+          <div style="display:flex;gap:0.5rem;margin-top:4px;">
+            <button type="button" class="method-btn">
+              <i data-lucide="mail" style="width:18px;height:18px;color:#60a5fa;"></i>
+              <span>Email</span>
+            </button>
+            <button type="button" class="method-btn active">
+              <i data-lucide="phone" style="width:18px;height:18px;color:#818cf8;"></i>
+              <span>Phone</span>
+            </button>
+            <button type="button" class="method-btn">
+              <i data-lucide="linkedin" style="width:18px;height:18px;color:#818cf8;"></i>
+              <span>LinkedIn</span>
+            </button>
+            <button type="button" class="method-btn">
+              <i data-lucide="message-circle" style="width:18px;height:18px;color:#4ade80;"></i>
+              <span>WhatsApp</span>
+            </button>
+            <button type="button" class="method-btn">
+              <i data-lucide="users" style="width:18px;height:18px;color:#c084fc;"></i>
+              <span>Meeting</span>
+            </button>
+            <button type="button" class="method-btn">
+              <i data-lucide="more-horizontal" style="width:18px;height:18px;color:#a1a1aa;"></i>
+              <span>Other</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div>
+          <label class="field-label">Notes <span style="color:#f87171;">*</span></label>
+          <textarea class="field-input" rows="5" style="resize:vertical;line-height:1.65;"
+            placeholder="What happened? Key takeaways, next steps, commitments made…">Called to discuss progress on their Q2 web project decision. Spoke for 20 mins. Sarah confirmed budget is approved and they want to move to proposal stage. She'd like a formal written proposal by 20 March covering web build + ongoing SEO. Will prepare and send by end of week.</textarea>
+        </div>
+
+        <!-- Credentials deck quick-toggle -->
+        <div style="padding:0.875rem;background:#27272a;border:1px solid #3f3f46;border-radius:10px;">
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+            <input type="checkbox" style="accent-color:#6366f1;width:16px;height:16px;cursor:pointer;">
+            <div>
+              <p style="font-size:0.8rem;font-weight:500;color:#e4e4e7;display:flex;align-items:center;gap:6px;">
+                <i data-lucide="file-check" style="width:14px;height:14px;color:#818cf8;"></i>
+                Mark credentials deck as sent during this interaction
+              </p>
+              <p style="font-size:0.7rem;color:#71717a;margin-top:1px;">Will record today's date as sent date</p>
+            </div>
+          </label>
+        </div>
+
+      </div>
+
+      <!-- Modal footer -->
+      <div style="padding:1.125rem 1.5rem;border-top:1px solid #27272a;display:flex;align-items:center;justify-content:flex-end;gap:0.625rem;">
+        <button style="background:#27272a;border:1px solid #3f3f46;border-radius:8px;padding:0.5rem 1.25rem;font-size:0.875rem;font-weight:500;color:#a1a1aa;cursor:pointer;font-family:Inter,system-ui,sans-serif;" onmouseover="this.style.borderColor='#52525b'" onmouseout="this.style.borderColor='#3f3f46'">
+          Cancel
+        </button>
+        <button style="background:#4f46e5;border:none;border-radius:8px;padding:0.5rem 1.5rem;font-size:0.875rem;font-weight:600;color:white;cursor:pointer;font-family:Inter,system-ui,sans-serif;display:flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(99,102,241,0.3);" onmouseover="this.style.background='#6366f1'" onmouseout="this.style.background='#4f46e5'">
+          <i data-lucide="plus" style="width:14px;height:14px;"></i> Log Interaction
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>
