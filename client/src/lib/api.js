@@ -3,18 +3,21 @@
  * All requests include credentials (httpOnly cookie).
  */
 
-const BASE = import.meta.env.VITE_API_URL || '/api';
+// ✅ Use VITE_API_BASE for Render, fallback to local dev
+const BASE = import.meta.env.VITE_API_BASE || 'http://localhost:3001/api';
 
 async function request(path, options = {}) {
   const res = await fetch(`${BASE}${path}`, {
-    credentials: 'include',
+    credentials: 'include', // send cookies
     headers: { 'Content-Type': 'application/json', ...options.headers },
     ...options,
     body: options.body ? JSON.stringify(options.body) : undefined,
   });
 
+  // 204 No Content
   if (res.status === 204) return null;
 
+  // Try parse JSON, else return error object
   const data = await res.json().catch(() => ({ error: 'Unexpected server response' }));
 
   if (!res.ok) {
@@ -29,7 +32,8 @@ async function request(path, options = {}) {
 // ── Auth ─────────────────────────────────────────────────────────────────────
 export const api = {
   auth: {
-    login:  (body)  => request('/auth/login',  { method: 'POST', body }),
+    // login expects { email, password }
+    login:  (body) => request('/auth/login',  { method: 'POST', body }),
     logout: ()      => request('/auth/logout', { method: 'POST' }),
     me:     ()      => request('/auth/me'),
   },

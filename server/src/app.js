@@ -22,7 +22,7 @@ app.set('trust proxy', 1);
 // ── CORS ─────────────────────────────────────────────────────────────────────
 const ALLOWED_ORIGINS = process.env.CLIENT_ORIGIN
   ? process.env.CLIENT_ORIGIN.split(',').map(s => s.trim())
-  : ['http://localhost:5173'];
+  : ['http://localhost:5173', 'https://tw-connect-frontend.onrender.com'];
 
 app.use(cors({
   origin: (origin, cb) => {
@@ -30,7 +30,7 @@ app.use(cors({
     if (!origin || ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
     cb(new Error(`CORS blocked: ${origin}`));
   },
-  credentials: true,
+  credentials: true, // allow cookies
 }));
 
 // ── Body parsing & cookies ───────────────────────────────────────────────────
