@@ -20,7 +20,7 @@ app.set('trust proxy', 1);
 
 // ── CORS ─────────────────────────────────────
 app.use(cors({
-  origin: 'https://tw-connect-frontend.onrender.com',
+   origin: 'https://connect.tenacityworks.com',
   credentials: true
 }));
 
