@@ -12,15 +12,6 @@ const LOCK_MINUTES   = 15;
 const SESSION_HOURS  = 8;
 const COOKIE_NAME    = 'twc_token';
 
-function cookieOptions() {
-  return {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production', // must be true for HTTPS
-    sameSite: 'none',                              // allow cross-origin cookie
-    maxAge: SESSION_HOURS * 60 * 60 * 1000,
-  };
-}
-
 // ── POST /api/auth/login ────────────────────────────────────────────────────
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -85,7 +76,9 @@ router.post('/login', async (req, res) => {
     { expiresIn: `${SESSION_HOURS}h` }
   );
 
-  res.cookie(COOKIE_NAME, token, cookieOptions()); // ✅ Updated cookie options
+  // ✅ Use cookie options from app.js to allow cross-origin cookies
+  res.cookie(COOKIE_NAME, token, req.app.locals.cookieOptions);
+
   logActivity(user.id, 'login', 'user', user.id);
 
   res.json({
@@ -102,7 +95,7 @@ router.post('/login', async (req, res) => {
 // ── POST /api/auth/logout ───────────────────────────────────────────────────
 router.post('/logout', requireAuth, (req, res) => {
   logActivity(req.user.id, 'logout', 'user', req.user.id);
-  res.clearCookie(COOKIE_NAME, cookieOptions()); // clear with same options
+  res.clearCookie(COOKIE_NAME, req.app.locals.cookieOptions);
   res.json({ message: 'Logged out' });
 });
 

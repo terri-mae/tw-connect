@@ -3,6 +3,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '..', '.e
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const path = require('path');
 
 const { apiLimiter, authLimiter } = require('./middleware/rateLimiter');
 
@@ -20,13 +21,22 @@ app.set('trust proxy', 1);
 
 // ── CORS ─────────────────────────────────────
 app.use(cors({
-   origin: 'https://connect.tenacityworks.com',
-  credentials: true
+  origin: 'https://connect.tenacityworks.com', // your frontend
+  credentials: true, // allow cookies
 }));
 
 // ── Body parsing & cookies ───────────────────
 app.use(express.json({ limit: '2mb' }));
 app.use(cookieParser());
+
+// ── JWT cookie options ───────────────────────
+app.locals.cookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production', // must be HTTPS
+  sameSite: 'none', // allow cross-origin cookies
+  path: '/',       // send cookie on all paths
+  maxAge: 8 * 60 * 60 * 1000, // 8 hours
+};
 
 // ── Rate limiting ────────────────────────────
 app.use('/api/', apiLimiter);
@@ -49,6 +59,15 @@ app.get('/api/health', (req, res) => {
 app.get('/', (req, res) => {
   res.send('✅ TW Connect API is running on Render!');
 });
+
+// ── Serve React build in production ──────────
+if (process.env.NODE_ENV === 'production') {
+  const clientDist = path.join(__dirname, '..', '..', 'client', 'dist');
+  app.use(express.static(clientDist));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(clientDist, 'index.html'));
+  });
+}
 
 // ── Error handler ────────────────────────────
 app.use((err, req, res, next) => {
