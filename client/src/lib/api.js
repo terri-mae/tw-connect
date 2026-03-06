@@ -1,6 +1,6 @@
 // api.js
-// Use relative paths for same-origin requests
-const BASE = '/api';
+// Use environment variable for backend URL (works for Render or local dev)
+const BASE = import.meta.env.VITE_API_URL || '/api';
 
 async function request(path, options = {}) {
   const res = await fetch(`${BASE}${path}`, {
@@ -26,7 +26,7 @@ async function request(path, options = {}) {
 // ── API client ──────────────────────────────────────────────
 export const api = {
   auth: {
-    login:  (body) => request('/auth/login',  { method: 'POST', body }),
+    login:  (body) => request('/auth/login', { method: 'POST', body }),
     logout: ()      => request('/auth/logout', { method: 'POST' }),
     me:     ()      => request('/auth/me'),
   },
