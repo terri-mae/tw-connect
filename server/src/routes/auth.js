@@ -15,8 +15,8 @@ const COOKIE_NAME    = 'twc_token';
 function cookieOptions() {
   return {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    secure: process.env.NODE_ENV === 'production', // must be true for HTTPS
+    sameSite: 'none',                              // allow cross-origin cookie
     maxAge: SESSION_HOURS * 60 * 60 * 1000,
   };
 }
@@ -35,7 +35,6 @@ router.post('/login', async (req, res) => {
   ).get(email.trim());
 
   if (!user) {
-    // Generic message to avoid user enumeration
     return res.status(401).json({ error: 'Invalid email or password' });
   }
 
@@ -86,7 +85,7 @@ router.post('/login', async (req, res) => {
     { expiresIn: `${SESSION_HOURS}h` }
   );
 
-  res.cookie(COOKIE_NAME, token, cookieOptions());
+  res.cookie(COOKIE_NAME, token, cookieOptions()); // ✅ Updated cookie options
   logActivity(user.id, 'login', 'user', user.id);
 
   res.json({
@@ -103,7 +102,7 @@ router.post('/login', async (req, res) => {
 // ── POST /api/auth/logout ───────────────────────────────────────────────────
 router.post('/logout', requireAuth, (req, res) => {
   logActivity(req.user.id, 'logout', 'user', req.user.id);
-  res.clearCookie(COOKIE_NAME);
+  res.clearCookie(COOKIE_NAME, cookieOptions()); // clear with same options
   res.json({ message: 'Logged out' });
 });
 
